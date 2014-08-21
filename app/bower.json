@@ -1,0 +1,34 @@
+{
+  "name": "PEBN",
+  "main": "app.js",
+  "version": "0.0.1",
+  "homepage": "https://github.com/drabrun/PEBN",
+  "authors": [
+    "drabrun <drabrun@gmail.com>"
+  ],
+  "description": "Postgres Express Bootstrap Node.js",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "css",
+    "js"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbone.babysitter": "^0.1.0",
+    "backbone.wreqr": "^1.0.0",
+    "bootstrap": "~3.2.0",
+    "leaflet": "~0.7.3",
+    "marionette": "~2.1.0",
+    "jquery": "~2.1.1"
+  }
+}
