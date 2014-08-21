@@ -2,15 +2,17 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/css/style.css')
-    link(rel='stylesheet', href='vendors/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', type='text/css', href='/css/style.css')
+    link(rel='stylesheet', type='text/css', href='/vendors/bootstrap/dist/css/bootstrap.min.css')
   body
     block content
-  script(href='vendors/jquery/dist/jquery.min.js')
-  script(href='vendors/bootstrap/dist/js/bootstrap.min.js')
-  script(href='vendors/underscore/underscore.js')
-  script(href='vendors/backbone/backbone.js')
-  script(href='vendors/backbone.babysitter/lib/backbone.babysitter.min.js')
-  script(href='vendors/backbone.wreqr/lib/backbone.wreqr.min.js')
-  script(href='vendors/leaflet/dist/leaflet.js')
-  script(href='vendors/marionette/lib/backbone.marionette.min.js')
+    script(src='/vendors/jquery/dist/jquery.min.js')
+    script(src='/vendors/bootstrap/dist/js/bootstrap.min.js')
+    script(src='/vendors/underscore/underscore.js')
+    script(src='/vendors/backbone/backbone.js')
+    script(src='/vendors/backbone.babysitter/lib/backbone.babysitter.min.js')
+    script(src='/vendors/backbone.wreqr/lib/backbone.wreqr.min.js')
+    script(src='/vendors/leaflet/dist/leaflet.js')
+    script(src='/vendors/marionette/lib/backbone.marionette.min.js')
+    script(src='/js/backbone.pebn.js')
+    script(src='/js/app.js')
