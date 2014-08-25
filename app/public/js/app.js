@@ -1,61 +1,49 @@
-var AppManager = new Marionette.Application();
+var App = new Marionette.Application();
+ 
  
 
+var Route = Backbone.Marionette.AppRouter.extend({
+  // map path to function
+  routes : {
+    ''     : 'goHome',
+    'home' : 'goHome',
+    'about': 'goAbout',
+    'contact': 'goContact'
+  }, 
+  goContact: function(){
+  	var appManager = App.request('AppManager');
+	App.mainRegion.show(new ContactView());
+	appManager.attributes.currentNav = "contact";
+	appManager.trigger("navigationChanged");
+  },
+  goHome: function(){
+  	var appManager = App.request('AppManager');
+	App.mainRegion.show(new HomeView());
+	appManager.attributes.currentNav = "home";
+	appManager.trigger("navigationChanged");
+  },
+  goAbout: function(){
+  	var appManager = App.request('AppManager');
+	App.mainRegion.show(new AboutView());
+	appManager.attributes.currentNav = "about";
+	appManager.trigger("navigationChanged");
+  }
+});
 
-
-AppManager.addRegions({
-	mainRegion: "#main-region"
- ,  
-    navigationRegion: "#nav-region"
-,    footerRegion: "#footer-region"
+App.addRegions({
+	mainRegion: "#main-region",  
+    navigationRegion: "#nav-region",    
+    footerRegion: "#footer-region"
 })
 
-
-MainView = Backbone.Marionette.ItemView.extend({
-    template: "main",
-    render: function() {
-        var that = this;
-        Backbone.Marionette.TemplateManager.loadTemplate(this.template, function(template) {
-            that.$el.html(template);
-        });
-    }
+App.reqres.setHandler('AppManager', function() {
+   if(App.AppManager) return App.AppManager;
+   
+   App.AppManager = Backbone.Model.extend({}); 
+   var manager = App.AppManager = new App.AppManager({ currentNav : "home"});
+   return manager;
 });
 
-
-NavigationView = Backbone.Marionette.ItemView.extend({
-    template: "navigation",
-    render: function() {
-        var that = this;
-        Backbone.Marionette.TemplateManager.loadTemplate(this.template, function(template) {
-            that.$el.html(template);
-        });
-    }
-});
-
-FooterView = Backbone.Marionette.ItemView.extend({
-    template: "footer",
-    render: function() {
-        var that = this;
-        Backbone.Marionette.TemplateManager.loadTemplate(this.template, function(template) {
-            that.$el.html(template);
-        });
-    }
-});
-
- 
-AppManager.on("start", function() {
-	var main = new MainView();
-	
-    var main = new MainView();
-	var nav = new NavigationView();
-	var footer = new FooterView();
-
-	AppManager.mainRegion.show(main);
-	AppManager.navigationRegion.show(nav);
-	AppManager.footerRegion.show(footer);
-	 
-});
+App.request('AppManager');
 
 
-
-AppManager.start();
