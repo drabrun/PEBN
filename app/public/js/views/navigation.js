@@ -5,7 +5,7 @@ NavigationView = Backbone.Marionette.ItemView.extend({
     	this.listenTo(App.request('AppManager'), 'loggedIn', this.changeNav);
     	this.listenTo(App.request('AppManager'), 'loggedOut', this.changeNav);
     },
-    options : {currentNav : null, currentUser : null},
+    options : {},
     changeNav : function(){
     	this.options.currentNav = App.request('AppManager').attributes.currentNav;
     	this.options.loggedIn = App.request('AppManager').attributes.currentUser == null ? null : App.request('AppManager').attributes.currentUser;
@@ -14,8 +14,10 @@ NavigationView = Backbone.Marionette.ItemView.extend({
     render: function() {
         var that = this;
         Backbone.Marionette.TemplateManager.loadTemplate(this.template, function(template) {
-        	$(that.el).html(_.template(template.outerHTML(), this.options));
-			 
+        	var ttt = Encoder.htmlDecode(template.outerHTML());
+        	var tpl = _.template(ttt);
+        	var html = tpl(that.options);
+            that.$el.html(html);
         });
     }
     

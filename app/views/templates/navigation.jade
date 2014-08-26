@@ -12,27 +12,16 @@
      | <li class="<%= currentNav == 'home' ? 'active' : ''%>"><a href='#' >Home</a></li>
      | <li class="<%= currentNav == 'about' ? 'active' : ''%>"><a href='#about' >About</a></li>
      | <li class="<%= currentNav == 'contact' ? 'active' : ''%>"><a href='#contact' >Contact</a></li>
-     li.dropdown
-      a.dropdown-toggle(href='#', data-toggle='dropdown')
-       | Admin
-       span.caret
-      ul.dropdown-menu(role='menu')
-       li
-        a(href='#') User Management
-       li
-        a(href='#') Role Management
-       li
-        a(href='#') Sent
-       li.divider
-       li.dropdown-header Nav header
-       li
-        a(href='#') Separated link
-       li
-        a(href='#') One more separated link
-     .navbar-form.navbar-right(role='login')
-      |<%= if(currentUser == null) { %>
-      |<input type="text" id="txtFirstName" value="" />
-      |<%= } else { %>
-      |<input type="text" id="txtFirstName" value="dave" />
-      |<%= } %>
+     | <% if(loggedIn == null){ %>
+     | <li class='dropdown'>
+     |  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <span class="caret"></span></a>
+     |  <ul class='dropdown-menu' role='menu'><li><a>User management</a></li></ul>
+     | </li>
+     | <% }   %>
+    ul.nav.navbar-form.navbar-right
+    |<% if(loggedIn == null) { %>
+    |<ul class='nav navbar-form navbar-right'><button class='btn btn-primary'>Log In</button></ul>
+    |<% } else { %>
+    |<p class="navbar-text navbar-right">Signed in as <a href="#"  >Mark Otto</a></p>
+    |<% } %>
 
