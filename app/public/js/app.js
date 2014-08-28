@@ -44,6 +44,8 @@ App.reqres.setHandler('AppManager', function() {
    return manager;
 });
 
+
+
 App.request('AppManager');
 
 

@@ -1,5 +1,8 @@
 NavigationView = Backbone.Marionette.ItemView.extend({
     template: "navigation",
+	events: {
+     'click #loginBtn': 'showLogin'
+    },
     initialize : function(){
     	this.listenTo(App.request('AppManager'), 'navigationChanged', this.changeNav);
     	this.listenTo(App.request('AppManager'), 'loggedIn', this.changeNav);
@@ -19,6 +22,11 @@ NavigationView = Backbone.Marionette.ItemView.extend({
         	var html = tpl(that.options);
             that.$el.html(html);
         });
-    }
+    },
+	showLogin : function(){
     
+    	App.request("ModalManager").show(new LoginView())
+    
+    }
+
 });
