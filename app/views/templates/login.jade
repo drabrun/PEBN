@@ -6,13 +6,19 @@
     span.sr-only Close
    h4.modal-title Login
   .modal-body
+   div
+    div.alert.hide.alert-danger.alert-dismissible(role='alert',id='alertBox')
+     button.close(id='loginAlertClose')
+      span(aria-hidden="true") &times;
+      span.sr-only Close
+     p(id='loginAlertMsg') da
    form(role='form')
     div.form-group
      label(for='username') Username
-     input.form-control(type='text',id='username',placeholder='Username')
+     input.form-control(type='text',id='loginUsernameInput',placeholder='Username')
     div.form-group
      label(for='username') Password
-     input.form-control(type='password',id='password',placeholder='Password')
+     input.form-control(type='password',id='loginPasswordInput',placeholder='Password')
   .modal-footer
    .button.btn.btn-default(type='button',data-dismiss='modal') Close
    .button.btn.btn-primary(id='submitLogin') Submit
