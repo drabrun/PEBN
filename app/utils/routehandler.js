@@ -1,7 +1,8 @@
 module.exports = function(app){
-  var routes = require('./../routes/index');
-  var users = require('./../routes/users');
+  //Require all routes here
 
-  app.use('/', routes);
-  app.use('/users', users);
+ var index = require('./../routes/index')(app);
+ var users = require('./../routes/users')(app);
+
+
 }

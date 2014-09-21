@@ -1,9 +1,13 @@
-var express = require('express');
-var router = express.Router();
+module.exports = function(app){
 
-/* GET users listing. */
-router.get('/', function(req, res) {
-  res.send('respond with a resource');
-});
+ var express = require('express');
+ var router = express.Router();
 
-module.exports = router;
+ /* GET users listing. */
+ router.get('/', function(req, res) {
+   console.log(app)
+   res.send('respond with a resource');
+ });
+ 
+ app.use("/users",router)
+}
