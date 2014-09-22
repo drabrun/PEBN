@@ -12,6 +12,7 @@ NavigationView = Backbone.Marionette.ItemView.extend({
     changeNav : function(){
     	this.options.currentNav = App.request('AppManager').attributes.currentNav;
     	this.options.loggedIn = App.request('AppManager').attributes.currentUser == null ? null : App.request('AppManager').attributes.currentUser;
+        this.options.signIn = App.request('AppManager').attributes.signInPage == null ? null : App.request('AppManager').attributes.signInPage;
     	this.render();
     },
     render: function() {

@@ -1,6 +1,4 @@
-var App = new Marionette.Application();
- 
- 
+var App = new Marionette.Application(); 
 
 var Route = Backbone.Marionette.AppRouter.extend({
   // map path to function
@@ -8,24 +6,36 @@ var Route = Backbone.Marionette.AppRouter.extend({
     ''     : 'goHome',
     'home' : 'goHome',
     'about': 'goAbout',
-    'contact': 'goContact'
+    'contact': 'goContact',
+    'signin': 'goSignIn',
+    'login': 'goSignIn'
+  },
+  goSignIn: function(){
+   var appManager = App.request('AppManager');
+   App.mainRegion.show(new SigninView());
+   appManager.attributes.currentNav = "login";
+   appManager.attributes.signInPage = true;
+   appManager.trigger("navigationChanged");
   }, 
   goContact: function(){
   	var appManager = App.request('AppManager');
 	App.mainRegion.show(new ContactView());
 	appManager.attributes.currentNav = "contact";
+        appManager.attributes.signInPage = false;
 	appManager.trigger("navigationChanged");
   },
   goHome: function(){
   	var appManager = App.request('AppManager');
 	App.mainRegion.show(new HomeView());
 	appManager.attributes.currentNav = "home";
+        appManager.attributes.signInPage = false;
 	appManager.trigger("navigationChanged");
   },
   goAbout: function(){
   	var appManager = App.request('AppManager');
 	App.mainRegion.show(new AboutView());
 	appManager.attributes.currentNav = "about";
+        appManager.attributes.signInPage = false;
 	appManager.trigger("navigationChanged");
   }
 });

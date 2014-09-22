@@ -19,9 +19,11 @@
      | </li>
      | <% }   %>
     ul.nav.navbar-form.navbar-right
+    |<% if(!signIn){ %>
     |<% if(loggedIn == null) { %>
-    |<ul class='nav navbar-form navbar-right'><button id='loginBtn' class='btn btn-primary'>Log In</button></ul>
+    |<ul class='nav navbar-form navbar-right'><a href='#signin' class='btn btn-primary'>Sign In</a></ul>
     |<% } else { %>
     |<p class="navbar-text navbar-right">Signed in as <a href="#"  >Mark Otto</a></p>
+    |<% } %>
     |<% } %>
 

@@ -1,13 +1,95 @@
-module.exports = function(app){
+var crypto = require('crypto'),
+    passport = require('passport');
 
- var express = require('express');
- var router = express.Router();
+module.exports = function(app) {
 
- /* GET users listing. */
- router.get('/', function(req, res) {
-   console.log(app)
-   res.send('respond with a resource');
- });
- 
- app.use("/users",router)
-}
+        var express = require('express');
+        var router = express.Router();
+        var data = require('../models/users')(app);
+
+        /* GET users listing. */
+        router.get('/', function(req, res) {
+            res.send('respond with a resource');
+        });
+        
+        router.post("/register", function(req, res) {
+                var vpw = req.body.vpw;
+                var pwu = req.body.pwu;
+                var un = req.body.un;
+
+                if (vpw != pwu) {
+                    res.statusCode = 400;
+                    res.send({
+                        error: {
+                            message: "The two passwords did not match"
+                        }
+                    });
+                    return;
+                }
+
+                req.checkBody('un', 'Please enter a valid email.').notEmpty().isEmail();
+                var errors = req.validationErrors();
+                if (errors) {
+                    res.statusCode = 400;
+                    res.send({
+                        error: {
+                            message: errors[0].msg
+                        }
+                    });
+                    return;
+                }
+
+                var new_salt = Math.round((new Date().valueOf() * Math.random())) + '';
+                var pw = crypto.createHmac('sha1', new_salt).update(pwu).digest('hex');
+                var created = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+                new data.ApiUser({
+                    email: un,
+                    password: pw,
+                    salt: new_salt,
+                    created: created
+                }).save().then(function(model) {
+                    passport.authenticate('local')(req, res, function() {
+                        res.send({
+                            success: true
+                        });
+                    })
+                }, function(err) {
+                    res.statusCode = 400;
+                    res.send({
+                        error: {
+                            message: "user could not be created"
+                        }
+                    });
+                });
+            });
+
+
+
+            router.post("/login", function(req, res, next) {
+                console.log('da da dave')
+                passport.authenticate('local', function(err, user, info) {
+                    console.log('insi')
+                    if (err || !user) {
+                        res.statusCode = 400;
+                        return res.send({
+                            error: info
+                        });
+                    }
+                    req.logIn(user, function(err) {
+                        if (err) {
+                            res.statusCode = 400;
+                            return res.send({
+                                error: info
+                            });
+                        }
+                        req.flash('success', 'Welcome!');
+                        return res.redirect('/#home');
+                    });
+                })(req, res, next);
+            });
+
+
+
+            app.use("/users", router)
+        }
