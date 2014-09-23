@@ -4,7 +4,8 @@ module.exports = function(app) {
     var bookshelf = {}
     
     bookshelf.ApiUser = Bookshelf.Model.extend({
-        tableName: 'users'
+        tableName: 'users',
+        idAttribute: "user_id"
     });
 
     return bookshelf;

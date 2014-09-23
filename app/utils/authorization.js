@@ -20,7 +20,7 @@ module.exports = function(app,passport) {
 
     passport.use(new LocalStrategy({
         usernameField: 'un',
-        passwordField: 'pw'
+        passwordField: 'vpw'
     },function(email, password, done) {
         new data.ApiUser({email: email}).fetch({require: true}).then(function(user) {
             var sa = user.get('salt');

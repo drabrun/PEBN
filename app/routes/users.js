@@ -1,5 +1,6 @@
 var crypto = require('crypto'),
-    passport = require('passport');
+    passport = require('passport'),
+    uuid = require('node-uuid');
 
 module.exports = function(app) {
 
@@ -44,11 +45,12 @@ module.exports = function(app) {
                 var created = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
                 new data.ApiUser({
-                    email: un,
+                    email : un,
                     password: pw,
                     salt: new_salt,
-                    created: created
-                }).save().then(function(model) {
+                    created: created,
+                    user_id: uuid.v4()
+                }).save(null, {method: 'insert'}).then(function(model) {
                     passport.authenticate('local')(req, res, function() {
                         res.send({
                             success: true
@@ -56,6 +58,8 @@ module.exports = function(app) {
                     })
                 }, function(err) {
                     res.statusCode = 400;
+                  
+                    console.log(err)
                     res.send({
                         error: {
                             message: "user could not be created"
@@ -69,22 +73,23 @@ module.exports = function(app) {
             router.post("/login", function(req, res, next) {
                 console.log('da da dave')
                 passport.authenticate('local', function(err, user, info) {
-                    console.log('insi')
+                    
                     if (err || !user) {
+                    	console.log('error check failed')
                         res.statusCode = 400;
                         return res.send({
                             error: info
                         });
                     }
                     req.logIn(user, function(err) {
+                    	console.log('inside login')
                         if (err) {
                             res.statusCode = 400;
                             return res.send({
                                 error: info
                             });
                         }
-                        req.flash('success', 'Welcome!');
-                        return res.redirect('/#home');
+                        return res.send({succes : true});
                     });
                 })(req, res, next);
             });
